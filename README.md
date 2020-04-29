@@ -3,7 +3,7 @@
 ## Project Overview = 
   This project has been done during udaicity's Data Scienctist nanodegree.
 
-  In the Project Workspace, we are having  a data set containing real messages that were sent during disaster events. We have to creat a machine learning pipeline to categorize these events so that we can send the messages to an appropriate disaster relief agency.
+  In the Project Workspace, we are having  a data set containing real messages that were sent during disaster events. We have to create a machine learning pipeline to categorize these events so that we can send the messages to an appropriate disaster relief agency.
   
  ## Project Components = 
  There are three components in this projects = 
@@ -25,6 +25,7 @@ In a Python script, train_classifier.py, machine learning pipeline is written th
 
 ### 3 Flask Web App = 
 Pre-made flask app ready to use we just need to change the filenames in this.
+then we can enter a message to that web app classify it.
 
 ## Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
