@@ -15,7 +15,20 @@ from sklearn.metrics import classification_report
 import pickle
 nltk.download(['punkt', 'wordnet'])
 
+ New
+
 def load_data(database_filepath):
+    '''
+    this function takes the filepath of database, split them into 
+    input and target values.
+    
+    Arguments : 
+        database filepath = from where data is to be load
+    return : 
+        X = list of input values
+        Y = data frame of output values
+        columns = labels of column 
+    '''
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table(table_name='disasterresponse', con=engine)
     X = df.message.values
@@ -26,6 +39,18 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    this function takes the string and split it into
+    tokkens followed by lemmatization and lower, strip operation on each
+    tokken
+    
+    parameters :
+        text = input string
+        
+    return :
+        clean_tokens = list of tokens
+    
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
     
@@ -37,6 +62,18 @@ def tokenize(text):
     return clean_tokens
 
 def build_model():
+    
+   '''
+   this function creates model by using pipelins and 
+   uses some parameter to select for best model parameters
+   using gridesearchcv.
+   uses randomforestclassifier.
+   parameters:
+    none
+   return:
+    cv : model
+   
+   '''
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -53,6 +90,18 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    this functino evaluates the model on each column by using 
+    classification_report.
+    
+    parameters:
+        model = trained model
+        X_test = input values for test set
+        Y_test = target values for test set
+        category_names = label names of output classes
+    return:
+        None
+    '''
     y_pred_gs = model.predict(X_test)
     for i, col in enumerate(category_names):
         print('report for column {} = '.format(col))
@@ -61,6 +110,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    it takes the model and filepath to save the model as pickle object.
+    parameters:
+        model = trained model
+        model_filepath = location where model is to be saved.
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
     
 
