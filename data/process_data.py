@@ -4,6 +4,10 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+     this function takes the two file_paths of csv files and merge
+     them into a single dataframe.
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = pd.merge(messages, categories, on = 'id')
@@ -11,6 +15,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''
+        this function takes a dataframe convert the categorie columns into 
+        each label colums and convert columns values into 1 
+        and 0 by extracting the information in particular row-col pair.
+        
+        parameters:
+            df = data frame 
+        return:
+            df = clean data frame having each label as a colums and its value as 1 and 0.
+    '''
     categories = df.categories.str.split(';', expand=True)
     row = categories.loc[0]
     column_name = []
@@ -35,6 +49,10 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    '''
+        it takes the dataframe and filepath and
+        store it inot the sql database.
+    '''
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('disasterresponse', engine, index=False, if_exists='replace')
     pass  
